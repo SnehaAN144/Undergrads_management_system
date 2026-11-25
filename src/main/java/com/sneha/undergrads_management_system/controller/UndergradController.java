@@ -29,4 +29,24 @@ public class UndergradController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Undergrad> updateUndergrad(
+            @PathVariable Long id,
+            @RequestBody Undergrad undergrad) {
+
+        return undergradService.updateUndergrad(id, undergrad)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUndergrad(@PathVariable Long id) {
+
+        boolean deleted = undergradService.deleteUndergrad(id);
+
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 }

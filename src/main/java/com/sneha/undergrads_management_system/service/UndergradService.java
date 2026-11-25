@@ -35,11 +35,28 @@ public class UndergradService {
         return undergradRepository.findById(id);
     }
     //Instead of returning null, let's use Optional and return a proper HTTP 404 Not Found if the student doesn't exist.
+    public Optional<Undergrad> updateUndergrad(Long id, Undergrad updatedUndergrad) {
 
+        return undergradRepository.findById(id)
+                .map(existingUndergrad -> {
 
+                    existingUndergrad.setFirstName(updatedUndergrad.getFirstName());
+                    existingUndergrad.setLastName(updatedUndergrad.getLastName());
+                    existingUndergrad.setEmail(updatedUndergrad.getEmail());
+                    existingUndergrad.setPhoneNumber(updatedUndergrad.getPhoneNumber());
+                    existingUndergrad.setDepartment(updatedUndergrad.getDepartment());
+                    existingUndergrad.setYear(updatedUndergrad.getYear());
 
+                    return undergradRepository.save(existingUndergrad);
+                });
+    }
+    public boolean deleteUndergrad(Long id) {
 
+        if (undergradRepository.existsById(id)) {
+            undergradRepository.deleteById(id);
+            return true;
+        }
 
-
-
+        return false;
+    }
 }
