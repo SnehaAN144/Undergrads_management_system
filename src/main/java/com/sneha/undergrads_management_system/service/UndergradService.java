@@ -45,7 +45,7 @@ public class UndergradService {
                     existingUndergrad.setEmail(updatedUndergrad.getEmail());
                     existingUndergrad.setPhoneNumber(updatedUndergrad.getPhoneNumber());
                     existingUndergrad.setDepartment(updatedUndergrad.getDepartment());
-                    existingUndergrad.setYear(updatedUndergrad.getYear());
+                    existingUndergrad.setAge(updatedUndergrad.getAge());
 
                     return undergradRepository.save(existingUndergrad);
                 });

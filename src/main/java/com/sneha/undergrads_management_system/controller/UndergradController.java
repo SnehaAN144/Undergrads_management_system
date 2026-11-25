@@ -5,7 +5,7 @@ import com.sneha.undergrads_management_system.service.UndergradService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor//
@@ -15,7 +15,7 @@ public class UndergradController {
     //dependency injection
     private final UndergradService undergradService;
     @PostMapping
-    public Undergrad createUndergrad(@RequestBody Undergrad undergrad){
+    public Undergrad createUndergrad(@Valid @RequestBody Undergrad undergrad){
         return undergradService.createUndergrad(undergrad);
     }
     @GetMapping
@@ -32,7 +32,7 @@ public class UndergradController {
     @PutMapping("/{id}")
     public ResponseEntity<Undergrad> updateUndergrad(
             @PathVariable Long id,
-            @RequestBody Undergrad undergrad) {
+            @Valid @RequestBody Undergrad undergrad) {
 
         return undergradService.updateUndergrad(id, undergrad)
                 .map(ResponseEntity::ok)
