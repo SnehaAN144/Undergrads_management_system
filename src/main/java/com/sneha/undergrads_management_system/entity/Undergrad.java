@@ -19,5 +19,6 @@ public class Undergrad {
     private String email;
     private String phoneNumber;
     private String department;
+    @Column(name = "academic_year")
     private Integer year;
 }
