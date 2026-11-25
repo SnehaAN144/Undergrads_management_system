@@ -27,8 +27,23 @@ public class Undergrad {
     @Size(max=150,message = "cannot exceed 150 characters")
     @Column(nullable = false,unique = true,length = 150)
     private String email;
+
+    @NotBlank(message = "Phone number is required")
+    @Pattern(
+            regexp = "^[0-9]{10}$",
+            message = "Phone number must contain exactly 10 digits"
+    )
     private String phoneNumber;
+
+    @NotBlank(message = "Department is required")
+    @Size(max = 100, message = "Department cannot exceed 100 characters")
+    @Column(nullable = false, length = 100)
     private String department;
-    @Column(name = "academic_year")
-    private Integer year;
+
+
+    @NotNull(message = "Age is required")
+    @Min(value = 18, message = "Age must be at least 18")
+    @Max(value = 120, message = "Age must be less than or equal to 120")
+    @Column(nullable = false)
+    private Integer age;
 }
