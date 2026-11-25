@@ -1,8 +1,12 @@
 package com.sneha.undergrads_management_system.service;
 
 
+import com.sneha.undergrads_management_system.entity.Undergrad;
+import com.sneha.undergrads_management_system.repository.UndergradRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service//This class contains business logic and should be managed by the Spring container.
 @RequiredArgsConstructor //This Lombok annotation generates a constructor for all final fields.
@@ -14,7 +18,18 @@ public class UndergradService {
     private final UndergradRepository undergradRepository;//Our service needs the repository to interact with the database.
     //Instead of manually creating it:
     //like this UndergradRepository repository = new UndergradRepository();
+    public Undergrad createUndergrad(Undergrad undergrad){
+        return undergradRepository.save(undergrad);
+    }
+//This method:
+//1. Receives an Undergrad object.
+//2. Passes it to the repository.
+//3. Repository saves it into the database.
+//4. Returns the saved student, including the generated ID.
 
+    public List<Undergrad> getAllUndergrad(){
+        return undergradRepository.findAll();
+    }
 
 
 
