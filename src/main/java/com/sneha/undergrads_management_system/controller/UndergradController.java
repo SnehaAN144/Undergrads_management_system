@@ -3,6 +3,7 @@ package com.sneha.undergrads_management_system.controller;
 import com.sneha.undergrads_management_system.entity.Undergrad;
 import com.sneha.undergrads_management_system.service.UndergradService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,5 +21,12 @@ public class UndergradController {
     @GetMapping
     public List<Undergrad> getAllUndergrad(){
         return undergradService.getAllUndergrad();
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Undergrad> getUndergradById(@PathVariable Long id) {
+
+        return undergradService.getUndergradById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

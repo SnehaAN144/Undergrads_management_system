@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service//This class contains business logic and should be managed by the Spring container.
 @RequiredArgsConstructor //This Lombok annotation generates a constructor for all final fields.
@@ -30,6 +31,11 @@ public class UndergradService {
     public List<Undergrad> getAllUndergrad(){
         return undergradRepository.findAll();
     }
+    public Optional<Undergrad> getUndergradById(Long id) {
+        return undergradRepository.findById(id);
+    }
+    //Instead of returning null, let's use Optional and return a proper HTTP 404 Not Found if the student doesn't exist.
+
 
 
 
