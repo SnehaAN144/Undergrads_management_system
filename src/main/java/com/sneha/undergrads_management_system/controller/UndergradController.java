@@ -1,45 +1,78 @@
 package com.sneha.undergrads_management_system.controller;
 
-import com.sneha.undergrads_management_system.entity.Undergrad;
+import com.sneha.undergrads_management_system.dto.UndergradRequestDTO;
+import com.sneha.undergrads_management_system.dto.UndergradResponseDTO;
 import com.sneha.undergrads_management_system.service.UndergradService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
+
 import java.util.List;
 
-@RequiredArgsConstructor//
-@RestController//Tells Spring this class handles REST requests and returns data directly in the response, typically JSON.
-@RequestMapping("/api/undergrads")//Defines the common URL path for all endpoints in this controller.
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/undergrads")
 public class UndergradController {
-    //dependency injection
+
+    // Dependency Injection
     private final UndergradService undergradService;
+
+
+    // CREATE undergraduate
     @PostMapping
-    public Undergrad createUndergrad(@Valid @RequestBody Undergrad undergrad){
-        return undergradService.createUndergrad(undergrad);
+    public ResponseEntity<UndergradResponseDTO> createUndergrad(
+            @Valid @RequestBody UndergradRequestDTO dto) {
+
+        UndergradResponseDTO createdUndergrad =
+                undergradService.createUndergrad(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(createdUndergrad);
     }
+
+
+    // GET all undergraduates
     @GetMapping
-    public List<Undergrad> getAllUndergrad(){
-        return undergradService.getAllUndergrad();
+    public ResponseEntity<List<UndergradResponseDTO>> getAllUndergrads() {
+
+        List<UndergradResponseDTO> undergrads =
+                undergradService.getAllUndergrads();
+
+        return ResponseEntity.ok(undergrads);
     }
+
+
+    // GET undergraduate by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Undergrad> getUndergradById(@PathVariable Long id) {
+    public ResponseEntity<UndergradResponseDTO> getUndergradById(
+            @PathVariable Long id) {
 
         return undergradService.getUndergradById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Undergrad> updateUndergrad(
-            @PathVariable Long id,
-            @Valid @RequestBody Undergrad undergrad) {
 
-        return undergradService.updateUndergrad(id, undergrad)
+
+    // UPDATE undergraduate
+    @PutMapping("/{id}")
+    public ResponseEntity<UndergradResponseDTO> updateUndergrad(
+            @PathVariable Long id,
+            @Valid @RequestBody UndergradRequestDTO dto) {
+
+        return undergradService.updateUndergrad(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
+    // DELETE undergraduate
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUndergrad(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUndergrad(
+            @PathVariable Long id) {
 
         boolean deleted = undergradService.deleteUndergrad(id);
 
